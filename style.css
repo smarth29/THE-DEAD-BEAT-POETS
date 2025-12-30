@@ -1,0 +1,164 @@
+@import url('https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,700;1,400&family=Playfair+Display:ital,wght@0,700;1,700&display=swap');
+
+body {
+    background-color: #0f0c0b;
+    background-image:
+        radial-gradient(circle at 50% 30%, rgba(68,48,35,0.4) 0%, rgba(10,8,7,1) 80%),
+        url("https://www.transparenttextures.com/patterns/dark-wood.png");
+    font-family: 'EB Garamond', serif;
+    color: #d1c7b7;
+    background-attachment: fixed;
+}
+
+/* ---------- BASIC STYLES ---------- */
+
+.title-font {
+    font-family: 'Playfair Display', serif;
+}
+
+.parchment-card {
+    background: rgba(20,18,15,0.6);
+    border: 1px solid rgba(139,115,85,0.2);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    backdrop-filter: blur(4px);
+}
+
+.poem-text {
+    white-space: pre-wrap;
+    line-height: 1.8;
+    font-size: 1.35rem;
+    letter-spacing: 0.02em;
+    color: #b5a48b;
+}
+
+/* ---------- IMAGE EFFECT ---------- */
+
+.sepia-glow {
+    filter: sepia(0.2) contrast(1.1) brightness(0.9);
+    box-shadow: 0 0 40px rgba(0,0,0,0.8);
+}
+
+/* ---------- ANIMATIONS ---------- */
+
+@keyframes fadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.animate-fade-up {
+    animation: fadeUp 1.5s ease forwards;
+}
+
+/* Image cinematic zoom */
+.image-hover {
+    overflow: hidden;
+}
+
+.image-hover img {
+    transition: transform 6s ease;
+}
+
+.image-hover:hover img {
+    transform: scale(1.08);
+}
+
+/* Button glow */
+.glow-btn {
+    transition: all 0.4s ease;
+}
+
+.glow-btn:hover {
+    background-color: #e7e5e4;
+    color: #000;
+    box-shadow: 0 0 20px rgba(255,255,255,0.25);
+}
+
+/* Admin modal animation */
+@keyframes modalFade {
+    from {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.modal-animate {
+    animation: modalFade 0.4s ease forwards;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: #0a0807; }
+::-webkit-scrollbar-thumb { background: #3d2b1f; border-radius: 4px; }
+/* ================= CINEMATIC EFFECTS ================= */
+
+/* Candle flicker effect */
+@keyframes candleFlicker {
+  0% { opacity: 0.95; }
+  25% { opacity: 0.85; }
+  50% { opacity: 1; }
+  75% { opacity: 0.9; }
+  100% { opacity: 0.95; }
+}
+
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(circle at 50% 20%, rgba(255,180,90,0.08), transparent 60%);
+  pointer-events: none;
+  animation: candleFlicker 4s infinite;
+  z-index: 1;
+}
+
+/* Scroll reveal */
+.reveal {
+  opacity: 0;
+  transform: translateY(60px);
+  transition: all 1.6s ease;
+}
+
+.reveal.active {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Breathing image animation */
+@keyframes breathe {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.04); }
+  100% { transform: scale(1); }
+}
+
+.breathe-img img {
+  animation: breathe 10s ease-in-out infinite;
+}
+
+/* Poem shimmer text */
+.poem-text {
+  background: linear-gradient(
+    90deg,
+    #b5a48b,
+    #e0d6c4,
+    #b5a48b
+  );
+  background-size: 300%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: shimmer 8s infinite;
+}
+
+@keyframes shimmer {
+  0% { background-position: 0%; }
+  50% { background-position: 100%; }
+  100% { background-position: 0%; }
+}
