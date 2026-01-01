@@ -1,105 +1,132 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>The Dead Beat Poets</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta charset="UTF-8">
+<title>The Dead Beat Poets</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.tailwindcss.com"></script>
 
-  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,700;1,400&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
 
-  <style>
-    body {
-      margin: 0;
-      font-family: 'EB Garamond', serif;
-      color: #e6dccb;
-      min-height: 100vh;
-      background:
-        linear-gradient(rgba(10,8,7,0.75), rgba(10,8,7,0.9)),
-        url("./deadbeat-poetsjpg.jpeg");
-      background-size: cover;
-      background-position: center;
-      background-attachment: fixed;
-    }
+<style>
+body {
+  margin: 0;
+  font-family: 'EB Garamond', serif;
+  color: #e6dccb;
+  min-height: 100vh;
+  background:
+    linear-gradient(rgba(10,8,7,0.75), rgba(10,8,7,0.9)),
+    url("./deadbeat-poetsjpg.jpeg");
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+}
 
-    body::after {
-      content: "";
-      position: fixed;
-      inset: 0;
-      background: radial-gradient(circle at 50% 20%, rgba(255,180,90,0.08), transparent 60%);
-      animation: flicker 4s infinite;
-      pointer-events: none;
-      z-index: 0;
-    }
+body::after {
+  content:"";
+  position:fixed;
+  inset:0;
+  background:radial-gradient(circle at 50% 20%, rgba(255,180,90,.08), transparent 60%);
+  animation:flicker 4s infinite;
+  pointer-events:none;
+  z-index:0;
+}
 
-    @keyframes flicker {
-      0% { opacity: .95 }
-      25% { opacity: .85 }
-      50% { opacity: 1 }
-      75% { opacity: .9 }
-      100% { opacity: .95 }
-    }
+@keyframes flicker {
+  0%,100%{opacity:.95}
+  25%{opacity:.85}
+  50%{opacity:1}
+  75%{opacity:.9}
+}
 
-    main { position: relative; z-index: 2; }
+main { position:relative; z-index:2; }
 
-    .title-font { font-family: 'Playfair Display', serif; }
+.title-font { font-family:'Playfair Display',serif; }
 
-    .card {
-      background: rgba(20,18,15,0.65);
-      backdrop-filter: blur(6px);
-      border: 1px solid rgba(140,110,80,0.3);
-      box-shadow: 0 20px 50px rgba(0,0,0,0.7);
-    }
+.book {
+  perspective: 2000px;
+}
 
-    .poem {
-      font-size: 1.4rem;
-      line-height: 1.9;
-      letter-spacing: 0.03em;
-      background: linear-gradient(90deg,#b5a48b,#f1e8d5,#b5a48b);
-      background-size: 300%;
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      animation: shimmer 8s infinite;
-      white-space: pre-wrap;
-      transition: opacity .4s ease;
-    }
+.page {
+  background: rgba(20,18,15,.65);
+  backdrop-filter: blur(6px);
+  border: 1px solid rgba(140,110,80,.3);
+  box-shadow: 0 20px 50px rgba(0,0,0,.7);
+  padding: 40px;
+  border-radius: 20px;
+  transform-origin: left;
+  transform-style: preserve-3d;
+  transition: transform .8s ease, opacity .4s ease;
+}
 
-    @keyframes shimmer {
-      0% { background-position: 0% }
-      50% { background-position: 100% }
-      100% { background-position: 0% }
-    }
+.page.hidden {
+  opacity: 0;
+  pointer-events: none;
+  position: absolute;
+}
 
-    .page-btn {
-      border: 1px solid rgba(200,180,140,0.4);
-      padding: 6px 14px;
-      border-radius: 999px;
-      transition: all .3s ease;
-    }
+.page.flip {
+  transform: rotateY(-180deg);
+}
 
-    .page-btn.active,
-    .page-btn:hover {
-      background: #e6dccb;
-      color: #000;
-    }
+.poem {
+  font-size: 1.35rem;
+  line-height: 1.9;
+  letter-spacing: .03em;
+  background: linear-gradient(90deg,#b5a48b,#f1e8d5,#b5a48b);
+  background-size: 300%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: shimmer 8s infinite;
+  white-space: pre-wrap;
+}
 
-    .hidden { display: none; }
-  </style>
+@keyframes shimmer {
+  0%{background-position:0%}
+  50%{background-position:100%}
+  100%{background-position:0%}
+}
+
+.nav-btn {
+  font-size: 1.8rem;
+  padding: 6px 14px;
+  border-radius: 999px;
+  border: 1px solid rgba(220,200,160,.4);
+  transition:.3s;
+}
+
+.nav-btn:hover {
+  background:#e6dccb;
+  color:#000;
+}
+
+.page-num {
+  border:1px solid rgba(200,180,140,.4);
+  padding:6px 12px;
+  border-radius:999px;
+}
+
+.page-num.active {
+  background:#e6dccb;
+  color:#000;
+}
+</style>
 </head>
 
 <body>
 
 <main class="min-h-screen flex items-center justify-center px-6 py-20">
 
-  <div class="card max-w-4xl w-full rounded-2xl p-10 text-center">
+<div class="book max-w-4xl w-full text-center relative">
 
-    <h1 class="title-font text-4xl md:text-5xl mb-6">
-      The Dead Beat Poets
-    </h1>
+<h1 class="title-font text-4xl md:text-5xl mb-6">
+The Dead Beat Poets
+</h1>
 
-    <!-- PAGE 1 -->
-    <p id="page1" class="poem">
+<!-- PAGE 1 -->
+<div class="page" id="p1">
+<p class="poem">
 Sab be-asar ho gaya hai aaj kal,
 na dawa ka asar bacha, na dua ka,
 jo dard tere khayalon se uthta hai,
@@ -119,84 +146,56 @@ aur din me chup-chup ke bikharna…
 par tera ek ehsaas
 sab kuchh be-asar kar deta hai.
 
-Sab be-asar ho gaya hai,
-waqt ka guzarna,
-logon ka samjhana,
-aur yeh kehna ki
-“sab theek ho jaayega.”
 Kuchh zakhm
 theek hone ke liye bane hi nahi hote.
+</p>
+</div>
 
-Mujhe nahi chahiye
-koi ilaaj, koi tasalli,
-bas itna sa chahiye
-ki tu ek baar samajh le—
-ki jab tu door hoti hai,
-toh meri saari koshishen
-sirf lafz reh jaati hain,
-aur main…
-main khud ke liye bhi
-sab be-asar ho jaata hoon.
-    </p>
+<!-- PAGE 2–5 -->
+<div class="page hidden" id="p2"><p class="poem">Page 2 — add your poem</p></div>
+<div class="page hidden" id="p3"><p class="poem">Page 3 — add your poem</p></div>
+<div class="page hidden" id="p4"><p class="poem">Page 4 — add your poem</p></div>
+<div class="page hidden" id="p5"><p class="poem">Page 5 — add your poem</p></div>
 
-    <!-- PAGE 2 (EMPTY / YOU WILL ADD) -->
-    <p id="page2" class="poem hidden">
-Hum dono ke beech jo lafzon ka tufaan sa chal raha hai,
-Woh na teri zid ka natija hai, na meri jazbaaton ki gardish ka.
-Sach toh yeh hai ki hum dono ek hi kashthi ke musafir hain,
-Bas lehrein alag-alag taraf se takra rahi hain… 
-aur hum dono ko dard samaan ka lag raha hai.
+<!-- NAVIGATION -->
+<div class="flex justify-center items-center gap-4 mt-8">
+<button class="nav-btn" onclick="prev()">⟵</button>
 
-Jo jhagde hum par lagte hain,
-Woh asal me hum vs duniya ki jung hai,
-Woh har woh baat jo humein todne ki koshish karti hai,
-Har woh pal jo humein ek dusre se door dhakelna chahta hai…
-Usi se ladte-ladte hum kabhi kabhi ek dusre ko hi teer bana dete hain.
+<button class="page-num active" onclick="go(1)">1</button>
+<button class="page-num" onclick="go(2)">2</button>
+<button class="page-num" onclick="go(3)">3</button>
+<button class="page-num" onclick="go(4)">4</button>
+<button class="page-num" onclick="go(5)">5</button>
 
-Par haqeeqat ye hai…
-Hum ek dusre ke khilaaf nahi, balki saath khade hain—
-Sirf zakhm alag-alag jagah lage hain.
-Tu bhi thak chuki hai, main bhi sookh chuka hoon,
-Tu rona chaahti hai, main chup reh kar sab seh leta hoon…
-Isliye lagta hai jaise ladai hum dono ki hai—
-Par jaan, hum dono toh ek hi paksh ke sipahi hain.
+<button class="nav-btn" onclick="next()">⟶</button>
+</div>
 
-Kabhi ruk kar sochna…
-Hamari baat aapas ki nahi hoti,
-Hamari ladai ek dusre se nahi hoti.
-Hamari ladai uss taqdeer se hoti hai
-Jo baar-baar humein parkhne aati hai.
-
-Aur agar kal kabhi koi pooche,
-“Kaun jeeta?”
-Hum muskurakar kehna—
-“Jeet humari thi… kyunki hum dono ek dusre ke saath khade the.”
-    </p>
-
-    <!-- PAGE BUTTONS -->
-    <div class="flex justify-center gap-3 mt-8">
-      <button class="page-btn active" onclick="showPage(1)">1</button>
-      <button class="page-btn" onclick="showPage(2)">2</button>
-    </div>
-
-  </div>
-
+</div>
 </main>
 
 <script>
-  function showPage(num) {
-    document.getElementById("page1").classList.add("hidden");
-    document.getElementById("page2").classList.add("hidden");
+let current = 1;
+const total = 5;
 
-    document.getElementById("page" + num).classList.remove("hidden");
+function go(n) {
+  if(n === current) return;
 
-    document.querySelectorAll(".page-btn").forEach(btn =>
-      btn.classList.remove("active")
-    );
-    event.target.classList.add("active");
-  }
+  document.getElementById("p"+current).classList.add("flip");
+  setTimeout(()=>{
+    document.getElementById("p"+current).classList.add("hidden");
+    document.getElementById("p"+current).classList.remove("flip");
+
+    current = n;
+    document.getElementById("p"+current).classList.remove("hidden");
+
+    document.querySelectorAll(".page-num").forEach(b=>b.classList.remove("active"));
+    document.querySelectorAll(".page-num")[current-1].classList.add("active");
+  },400);
+}
+
+function next() { if(current < total) go(current+1); }
+function prev() { if(current > 1) go(current-1); }
 </script>
 
 </body>
 </html>
-
