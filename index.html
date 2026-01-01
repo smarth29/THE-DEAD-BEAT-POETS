@@ -2,26 +2,33 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>The Dead Beat Poets</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
   <!-- Tailwind -->
   <script src="https://cdn.tailwindcss.com"></script>
 
-  <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,700;1,400&family=Playfair+Display:ital,wght@0,700;1,700&display=swap" rel="stylesheet">
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,700;1,400&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
 
-  <!-- CUSTOM CSS (IMPORTANT: Tailwind ke BAAD) -->
   <style>
     body {
-      background-color: #0f0c0b;
-      background-image:
-        radial-gradient(circle at 50% 30%, rgba(68,48,35,0.4) 0%, rgba(10,8,7,1) 80%),
-        url("https://www.transparenttextures.com/patterns/dark-wood.png");
+      margin: 0;
       font-family: 'EB Garamond', serif;
-      color: #d1c7b7;
+      color: #e6dccb;
+      min-height: 100vh;
+
+      /* BACKGROUND IMAGE */
+      background:
+        linear-gradient(
+          rgba(10,8,7,0.75),
+          rgba(10,8,7,0.9)
+        ),
+        url("./deadbeat-poetsjpg.jpeg");
+
+      background-size: cover;
+      background-position: center;
       background-attachment: fixed;
-      overflow-x: hidden;
     }
 
     /* Candle flicker overlay */
@@ -30,9 +37,17 @@
       position: fixed;
       inset: 0;
       background: radial-gradient(circle at 50% 20%, rgba(255,180,90,0.08), transparent 60%);
+      animation: flicker 4s infinite;
       pointer-events: none;
-      animation: candleFlicker 4s infinite;
       z-index: 0;
+    }
+
+    @keyframes flicker {
+      0% { opacity: 0.95 }
+      25% { opacity: 0.85 }
+      50% { opacity: 1 }
+      75% { opacity: 0.9 }
+      100% { opacity: 0.95 }
     }
 
     main {
@@ -40,31 +55,23 @@
       z-index: 2;
     }
 
-    @keyframes candleFlicker {
-      0% { opacity: .95 }
-      25% { opacity: .85 }
-      50% { opacity: 1 }
-      75% { opacity: .9 }
-      100% { opacity: .95 }
-    }
-
     .title-font {
       font-family: 'Playfair Display', serif;
     }
 
-    .parchment-card {
+    .card {
       background: rgba(20,18,15,0.65);
-      border: 1px solid rgba(139,115,85,0.25);
-      box-shadow: 0 10px 30px rgba(0,0,0,.6);
-      backdrop-filter: blur(4px);
-      -webkit-backdrop-filter: blur(4px);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      border: 1px solid rgba(140,110,80,0.3);
+      box-shadow: 0 20px 50px rgba(0,0,0,0.7);
     }
 
-    .poem-text {
-      line-height: 1.8;
-      font-size: 1.35rem;
-      letter-spacing: .02em;
-      background: linear-gradient(90deg,#b5a48b,#e0d6c4,#b5a48b);
+    .poem {
+      font-size: 1.4rem;
+      line-height: 1.9;
+      letter-spacing: 0.03em;
+      background: linear-gradient(90deg,#b5a48b,#f1e8d5,#b5a48b);
       background-size: 300%;
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
@@ -77,27 +84,6 @@
       50% { background-position: 100% }
       100% { background-position: 0% }
     }
-
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(30px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    .animate-fade-up {
-      animation: fadeUp 1.5s ease forwards;
-    }
-
-    .image-hover img {
-      transition: transform 6s ease;
-    }
-
-    .image-hover:hover img {
-      transform: scale(1.08);
-    }
-
-    ::-webkit-scrollbar { width: 8px; }
-    ::-webkit-scrollbar-track { background: #0a0807; }
-    ::-webkit-scrollbar-thumb { background: #3d2b1f; border-radius: 4px; }
   </style>
 </head>
 
@@ -105,26 +91,21 @@
 
 <main class="min-h-screen flex items-center justify-center px-6 py-20">
 
-  <div class="max-w-4xl w-full parchment-card rounded-2xl p-10 animate-fade-up">
+  <div class="card max-w-4xl w-full rounded-2xl p-10 text-center">
 
-    <h1 class="title-font text-4xl md:text-5xl text-center mb-6">
+    <h1 class="title-font text-4xl md:text-5xl mb-6">
       The Dead Beat Poets
     </h1>
 
-    <p class="poem-text text-center">
-    
-hi
-    </p>
+    <p class="poem">
+We wrote in shadows,
+under dying lamps,
+where silence learned our names.
 
-    <div class="mt-10 image-hover overflow-hidden rounded-xl">
-      
-     <img
-  src="./deadbeat-poetsjpg.jpeg"
-  class="w-full object-cover sepia-glow"
-  alt="The Dead Beat Poets"
-      />
-     
-    </div>
+Ink bled like truth,
+slow and unforgiving,
+refusing to fade.
+    </p>
 
   </div>
 
@@ -132,7 +113,3 @@ hi
 
 </body>
 </html>
-
-
-
-
