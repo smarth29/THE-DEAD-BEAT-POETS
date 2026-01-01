@@ -5,10 +5,8 @@
   <title>The Dead Beat Poets</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
-  <!-- Tailwind -->
   <script src="https://cdn.tailwindcss.com"></script>
 
-  <!-- Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,700;1,400&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
 
   <style>
@@ -17,21 +15,14 @@
       font-family: 'EB Garamond', serif;
       color: #e6dccb;
       min-height: 100vh;
-
-      /* BACKGROUND IMAGE */
       background:
-        linear-gradient(
-          rgba(10,8,7,0.75),
-          rgba(10,8,7,0.9)
-        ),
+        linear-gradient(rgba(10,8,7,0.75), rgba(10,8,7,0.9)),
         url("./deadbeat-poetsjpg.jpeg");
-
       background-size: cover;
       background-position: center;
       background-attachment: fixed;
     }
 
-    /* Candle flicker overlay */
     body::after {
       content: "";
       position: fixed;
@@ -43,26 +34,20 @@
     }
 
     @keyframes flicker {
-      0% { opacity: 0.95 }
-      25% { opacity: 0.85 }
+      0% { opacity: .95 }
+      25% { opacity: .85 }
       50% { opacity: 1 }
-      75% { opacity: 0.9 }
-      100% { opacity: 0.95 }
+      75% { opacity: .9 }
+      100% { opacity: .95 }
     }
 
-    main {
-      position: relative;
-      z-index: 2;
-    }
+    main { position: relative; z-index: 2; }
 
-    .title-font {
-      font-family: 'Playfair Display', serif;
-    }
+    .title-font { font-family: 'Playfair Display', serif; }
 
     .card {
       background: rgba(20,18,15,0.65);
       backdrop-filter: blur(6px);
-      -webkit-backdrop-filter: blur(6px);
       border: 1px solid rgba(140,110,80,0.3);
       box-shadow: 0 20px 50px rgba(0,0,0,0.7);
     }
@@ -77,6 +62,7 @@
       -webkit-text-fill-color: transparent;
       animation: shimmer 8s infinite;
       white-space: pre-wrap;
+      transition: opacity .4s ease;
     }
 
     @keyframes shimmer {
@@ -84,6 +70,21 @@
       50% { background-position: 100% }
       100% { background-position: 0% }
     }
+
+    .page-btn {
+      border: 1px solid rgba(200,180,140,0.4);
+      padding: 6px 14px;
+      border-radius: 999px;
+      transition: all .3s ease;
+    }
+
+    .page-btn.active,
+    .page-btn:hover {
+      background: #e6dccb;
+      color: #000;
+    }
+
+    .hidden { display: none; }
   </style>
 </head>
 
@@ -97,7 +98,8 @@
       The Dead Beat Poets
     </h1>
 
-    <p class="poem">
+    <!-- PAGE 1 -->
+    <p id="page1" class="poem">
 Sab be-asar ho gaya hai aaj kal,
 na dawa ka asar bacha, na dua ka,
 jo dard tere khayalon se uthta hai,
@@ -137,11 +139,34 @@ main khud ke liye bhi
 sab be-asar ho jaata hoon.
     </p>
 
+    <!-- PAGE 2 (EMPTY / YOU WILL ADD) -->
+    <p id="page2" class="poem hidden">
+      <!-- Yahan tum apni dusri poem baad me add karna -->
+    </p>
+
+    <!-- PAGE BUTTONS -->
+    <div class="flex justify-center gap-3 mt-8">
+      <button class="page-btn active" onclick="showPage(1)">1</button>
+      <button class="page-btn" onclick="showPage(2)">2</button>
+    </div>
+
   </div>
 
 </main>
 
+<script>
+  function showPage(num) {
+    document.getElementById("page1").classList.add("hidden");
+    document.getElementById("page2").classList.add("hidden");
+
+    document.getElementById("page" + num).classList.remove("hidden");
+
+    document.querySelectorAll(".page-btn").forEach(btn =>
+      btn.classList.remove("active")
+    );
+    event.target.classList.add("active");
+  }
+</script>
+
 </body>
 </html>
-
-
