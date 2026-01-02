@@ -23,52 +23,12 @@ body {
   background: #0a0a0f;
 }
 
-/* Animated Background */
+/* Simplified Background */
 .bg-canvas {
   position: fixed;
   inset: 0;
   z-index: 0;
-  background: 
-    radial-gradient(ellipse at 20% 30%, rgba(138, 43, 226, 0.15), transparent 50%),
-    radial-gradient(ellipse at 80% 70%, rgba(255, 140, 0, 0.12), transparent 50%),
-    radial-gradient(ellipse at 50% 50%, rgba(25, 25, 60, 0.4), transparent 70%),
-    linear-gradient(180deg, #0a0a0f 0%, #1a1a2e 100%);
-  animation: bgShift 20s ease-in-out infinite;
-}
-
-@keyframes bgShift {
-  0%, 100% { filter: hue-rotate(0deg) brightness(1); }
-  50% { filter: hue-rotate(20deg) brightness(1.1); }
-}
-
-/* Floating particles */
-.particle {
-  position: fixed;
-  width: 3px;
-  height: 3px;
-  background: rgba(255, 215, 180, 0.6);
-  border-radius: 50%;
-  pointer-events: none;
-  z-index: 1;
-  animation: float linear infinite;
-  box-shadow: 0 0 10px rgba(255, 215, 180, 0.8);
-}
-
-@keyframes float {
-  0% {
-    transform: translateY(100vh) translateX(0) scale(0);
-    opacity: 0;
-  }
-  10% {
-    opacity: 1;
-  }
-  90% {
-    opacity: 1;
-  }
-  100% {
-    transform: translateY(-100px) translateX(100px) scale(1);
-    opacity: 0;
-  }
+  background: linear-gradient(180deg, #0a0a0f 0%, #1a1a2e 100%);
 }
 
 main {
@@ -90,17 +50,15 @@ main {
 .title-section {
   text-align: center;
   margin-bottom: 60px;
-  animation: fadeInDown 1s ease-out;
+  animation: fadeIn 1s ease-out;
 }
 
-@keyframes fadeInDown {
+@keyframes fadeIn {
   from {
     opacity: 0;
-    transform: translateY(-30px);
   }
   to {
     opacity: 1;
-    transform: translateY(0);
   }
 }
 
@@ -110,18 +68,11 @@ h1 {
   font-weight: 300;
   letter-spacing: 0.05em;
   background: linear-gradient(135deg, #ffd700 0%, #ffb347 25%, #dda0dd 50%, #ffb347 75%, #ffd700 100%);
-  background-size: 300% 300%;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  animation: gradientShift 8s ease infinite;
   text-shadow: 0 0 80px rgba(255, 215, 0, 0.3);
   margin-bottom: 15px;
-}
-
-@keyframes gradientShift {
-  0%, 100% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
 }
 
 .subtitle {
@@ -155,7 +106,7 @@ h1 {
     0 40px 100px rgba(0, 0, 0, 0.8),
     inset 0 1px 0 rgba(255, 255, 255, 0.03),
     0 0 60px rgba(138, 43, 226, 0.15);
-  transition: all 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
   opacity: 0;
   pointer-events: none;
 }
@@ -166,100 +117,65 @@ h1 {
   z-index: 2;
 }
 
-/* Page Transitions */
+/* Simplified Page Transitions */
 .page.slide-out-left {
-  animation: slideOutLeft 0.7s cubic-bezier(0.6, 0, 0.4, 1) forwards;
+  animation: slideOutLeft 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
 }
 
 .page.slide-out-right {
-  animation: slideOutRight 0.7s cubic-bezier(0.6, 0, 0.4, 1) forwards;
+  animation: slideOutRight 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
 }
 
 .page.slide-in-left {
-  animation: slideInLeft 0.7s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  animation: slideInLeft 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
 }
 
 .page.slide-in-right {
-  animation: slideInRight 0.7s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  animation: slideInRight 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
 }
 
 @keyframes slideOutLeft {
   0% { 
-    transform: translateX(0) rotateY(0deg) scale(1);
+    transform: translateX(0) rotateY(0deg);
     opacity: 1;
-    filter: blur(0);
   }
   100% { 
-    transform: translateX(-120%) rotateY(-15deg) scale(0.8);
+    transform: translateX(-100%) rotateY(-10deg);
     opacity: 0;
-    filter: blur(10px);
   }
 }
 
 @keyframes slideOutRight {
   0% { 
-    transform: translateX(0) rotateY(0deg) scale(1);
+    transform: translateX(0) rotateY(0deg);
     opacity: 1;
-    filter: blur(0);
   }
   100% { 
-    transform: translateX(120%) rotateY(15deg) scale(0.8);
+    transform: translateX(100%) rotateY(10deg);
     opacity: 0;
-    filter: blur(10px);
   }
 }
 
 @keyframes slideInLeft {
   0% { 
-    transform: translateX(-120%) rotateY(-15deg) scale(0.8);
+    transform: translateX(-100%) rotateY(-10deg);
     opacity: 0;
-    filter: blur(10px);
   }
   100% { 
-    transform: translateX(0) rotateY(0deg) scale(1);
+    transform: translateX(0) rotateY(0deg);
     opacity: 1;
-    filter: blur(0);
   }
 }
 
 @keyframes slideInRight {
   0% { 
-    transform: translateX(120%) rotateY(15deg) scale(0.8);
+    transform: translateX(100%) rotateY(10deg);
     opacity: 0;
-    filter: blur(10px);
   }
   100% { 
-    transform: translateX(0) rotateY(0deg) scale(1);
+    transform: translateX(0) rotateY(0deg);
     opacity: 1;
-    filter: blur(0);
   }
-}
-
-/* Glowing border effect */
-.page::before {
-  content: '';
-  position: absolute;
-  inset: -2px;
-  border-radius: 30px;
-  background: linear-gradient(135deg, 
-    rgba(255, 215, 0, 0.3), 
-    rgba(221, 160, 221, 0.3), 
-    rgba(255, 140, 0, 0.3));
-  background-size: 200% 200%;
-  animation: borderGlow 4s ease infinite;
-  opacity: 0;
-  transition: opacity 0.5s;
-  z-index: -1;
-  filter: blur(10px);
-}
-
-.page:hover::before {
-  opacity: 1;
-}
-
-@keyframes borderGlow {
-  0%, 100% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
 }
 
 /* Poem Text */
@@ -269,25 +185,8 @@ h1 {
   line-height: 2.2;
   letter-spacing: 0.03em;
   white-space: pre-wrap;
-  background: linear-gradient(135deg, 
-    #ffd700 0%, 
-    #f5deb3 20%, 
-    #dda0dd 40%, 
-    #f0e68c 60%, 
-    #ffb347 80%, 
-    #ffd700 100%);
-  background-size: 400% 400%;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  animation: poemFlow 15s ease-in-out infinite;
-  filter: drop-shadow(0 0 30px rgba(255, 215, 0, 0.2));
+  color: #f5deb3;
   text-align: left;
-}
-
-@keyframes poemFlow {
-  0%, 100% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
 }
 
 /* Navigation */
@@ -310,31 +209,16 @@ h1 {
   border-radius: 50px;
   cursor: pointer;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  position: relative;
-  overflow: hidden;
-}
-
-.nav-btn::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(135deg, rgba(255, 215, 0, 0.15), rgba(221, 160, 221, 0.15));
-  opacity: 0;
-  transition: opacity 0.3s;
-}
-
-.nav-btn:hover::before {
-  opacity: 1;
 }
 
 .nav-btn:hover {
-  transform: translateY(-3px) scale(1.05);
-  box-shadow: 0 10px 30px rgba(255, 215, 0, 0.3);
-  border-color: rgba(255, 215, 0, 0.5);
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(255, 215, 0, 0.2);
+  border-color: rgba(255, 215, 0, 0.4);
 }
 
 .nav-btn:active {
-  transform: translateY(-1px) scale(1.02);
+  transform: translateY(0);
 }
 
 .page-indicators {
@@ -357,7 +241,6 @@ h1 {
 
 .page-num:hover {
   background: rgba(50, 45, 65, 0.8);
-  transform: translateY(-2px);
   border-color: rgba(255, 215, 180, 0.4);
   color: #f5f1e8;
 }
@@ -367,8 +250,7 @@ h1 {
   color: #0a0a0f;
   font-weight: 600;
   border-color: transparent;
-  box-shadow: 0 5px 25px rgba(255, 215, 0, 0.4);
-  transform: translateY(-2px);
+  box-shadow: 0 2px 10px rgba(255, 215, 0, 0.3);
 }
 
 /* Responsive */
@@ -385,22 +267,6 @@ h1 {
     padding: 8px 12px;
     font-size: 0.9rem;
   }
-}
-
-/* Loading animation */
-@keyframes pageLoad {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.page.active {
-  animation: pageLoad 0.6s ease-out;
 }
 </style>
 </head>
@@ -544,21 +410,6 @@ on this page.</p>
 </main>
 
 <script>
-// Create floating particles
-function createParticles() {
-  const particleCount = 30;
-  for (let i = 0; i < particleCount; i++) {
-    const particle = document.createElement('div');
-    particle.className = 'particle';
-    particle.style.left = Math.random() * 100 + '%';
-    particle.style.animationDuration = (Math.random() * 15 + 10) + 's';
-    particle.style.animationDelay = Math.random() * 5 + 's';
-    document.body.appendChild(particle);
-  }
-}
-
-createParticles();
-
 // Page Navigation
 let currentPage = 1;
 const totalPages = 10;
@@ -587,11 +438,11 @@ function goToPage(pageNum) {
     setTimeout(() => {
       newPageEl.classList.remove('slide-in-left', 'slide-in-right');
       isAnimating = false;
-    }, 700);
+    }, 600);
     
     currentPage = pageNum;
     updatePageIndicators();
-  }, 700);
+  }, 600);
 }
 
 function nextPage() {
