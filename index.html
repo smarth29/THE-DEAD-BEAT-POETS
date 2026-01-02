@@ -5,129 +5,424 @@
 <title>The Dead Beat Poets</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<script src="https://cdn.tailwindcss.com"></script>
-
-<link href="https://fonts.googleapis.com/css2?family=EB+Garamond&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@300;400;600&family=Cormorant+Garamond:wght@300;400;600&display=swap" rel="stylesheet">
 
 <style>
-body {
+* {
   margin: 0;
-  font-family: 'EB Garamond', serif;
-  color: #e6dccb;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Crimson Pro', serif;
+  color: #f5f1e8;
   min-height: 100vh;
-  background:
-    linear-gradient(rgba(10,8,7,0.75), rgba(10,8,7,0.9)),
-    url("./deadbeat-poetsjpg.jpeg");
-  background-size: cover;
-  background-position: center;
-  background-attachment: fixed;
+  overflow-x: hidden;
+  position: relative;
+  background: #0a0a0f;
 }
 
-body::after {
-  content:"";
-  position:fixed;
-  inset:0;
-  background:radial-gradient(circle at 50% 20%, rgba(255,180,90,.08), transparent 60%);
-  animation:flicker 4s infinite;
-  pointer-events:none;
-  z-index:0;
+/* Animated Background */
+.bg-canvas {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  background: 
+    radial-gradient(ellipse at 20% 30%, rgba(138, 43, 226, 0.15), transparent 50%),
+    radial-gradient(ellipse at 80% 70%, rgba(255, 140, 0, 0.12), transparent 50%),
+    radial-gradient(ellipse at 50% 50%, rgba(25, 25, 60, 0.4), transparent 70%),
+    linear-gradient(180deg, #0a0a0f 0%, #1a1a2e 100%);
+  animation: bgShift 20s ease-in-out infinite;
 }
 
-@keyframes flicker {
-  0%,100%{opacity:.95}
-  25%{opacity:.85}
-  50%{opacity:1}
-  75%{opacity:.9}
+@keyframes bgShift {
+  0%, 100% { filter: hue-rotate(0deg) brightness(1); }
+  50% { filter: hue-rotate(20deg) brightness(1.1); }
 }
 
-main { position:relative; z-index:2; }
+/* Floating particles */
+.particle {
+  position: fixed;
+  width: 3px;
+  height: 3px;
+  background: rgba(255, 215, 180, 0.6);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 1;
+  animation: float linear infinite;
+  box-shadow: 0 0 10px rgba(255, 215, 180, 0.8);
+}
 
-.title-font { font-family:'Playfair Display',serif; }
+@keyframes float {
+  0% {
+    transform: translateY(100vh) translateX(0) scale(0);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-100px) translateX(100px) scale(1);
+    opacity: 0;
+  }
+}
 
-.book {
-  perspective: 2000px;
+main {
+  position: relative;
+  z-index: 10;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 20px;
+}
+
+.container {
+  max-width: 900px;
+  width: 100%;
+}
+
+/* Title */
+.title-section {
+  text-align: center;
+  margin-bottom: 60px;
+  animation: fadeInDown 1s ease-out;
+}
+
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+h1 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(2.5rem, 6vw, 4.5rem);
+  font-weight: 300;
+  letter-spacing: 0.05em;
+  background: linear-gradient(135deg, #ffd700 0%, #ffb347 25%, #dda0dd 50%, #ffb347 75%, #ffd700 100%);
+  background-size: 300% 300%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: gradientShift 8s ease infinite;
+  text-shadow: 0 0 80px rgba(255, 215, 0, 0.3);
+  margin-bottom: 15px;
+}
+
+@keyframes gradientShift {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+.subtitle {
+  font-size: 1.1rem;
+  color: #c4b5a0;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  opacity: 0.8;
+}
+
+/* Book Container */
+.book-wrapper {
+  perspective: 1500px;
+  position: relative;
+}
+
+.page-container {
+  position: relative;
+  min-height: 500px;
 }
 
 .page {
-  background: rgba(20,18,15,.65);
-  backdrop-filter: blur(6px);
-  border: 1px solid rgba(140,110,80,.3);
-  box-shadow: 0 20px 50px rgba(0,0,0,.7);
-  padding: 40px;
-  border-radius: 20px;
-  transform-origin: left;
-  transform-style: preserve-3d;
-  transition: transform .8s ease, opacity .4s ease;
-}
-
-.page.hidden {
+  position: absolute;
+  width: 100%;
+  background: linear-gradient(135deg, rgba(20, 18, 30, 0.85) 0%, rgba(35, 30, 45, 0.75) 100%);
+  backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid rgba(255, 215, 180, 0.15);
+  border-radius: 30px;
+  padding: 60px 50px;
+  box-shadow: 
+    0 40px 100px rgba(0, 0, 0, 0.8),
+    inset 0 1px 0 rgba(255, 255, 255, 0.03),
+    0 0 60px rgba(138, 43, 226, 0.15);
+  transition: all 0.7s cubic-bezier(0.4, 0, 0.2, 1);
   opacity: 0;
   pointer-events: none;
+}
+
+.page.active {
+  opacity: 1;
+  pointer-events: auto;
+  z-index: 2;
+}
+
+/* Page Transitions */
+.page.slide-out-left {
+  animation: slideOutLeft 0.7s cubic-bezier(0.6, 0, 0.4, 1) forwards;
+}
+
+.page.slide-out-right {
+  animation: slideOutRight 0.7s cubic-bezier(0.6, 0, 0.4, 1) forwards;
+}
+
+.page.slide-in-left {
+  animation: slideInLeft 0.7s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.page.slide-in-right {
+  animation: slideInRight 0.7s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+@keyframes slideOutLeft {
+  0% { 
+    transform: translateX(0) rotateY(0deg) scale(1);
+    opacity: 1;
+    filter: blur(0);
+  }
+  100% { 
+    transform: translateX(-120%) rotateY(-15deg) scale(0.8);
+    opacity: 0;
+    filter: blur(10px);
+  }
+}
+
+@keyframes slideOutRight {
+  0% { 
+    transform: translateX(0) rotateY(0deg) scale(1);
+    opacity: 1;
+    filter: blur(0);
+  }
+  100% { 
+    transform: translateX(120%) rotateY(15deg) scale(0.8);
+    opacity: 0;
+    filter: blur(10px);
+  }
+}
+
+@keyframes slideInLeft {
+  0% { 
+    transform: translateX(-120%) rotateY(-15deg) scale(0.8);
+    opacity: 0;
+    filter: blur(10px);
+  }
+  100% { 
+    transform: translateX(0) rotateY(0deg) scale(1);
+    opacity: 1;
+    filter: blur(0);
+  }
+}
+
+@keyframes slideInRight {
+  0% { 
+    transform: translateX(120%) rotateY(15deg) scale(0.8);
+    opacity: 0;
+    filter: blur(10px);
+  }
+  100% { 
+    transform: translateX(0) rotateY(0deg) scale(1);
+    opacity: 1;
+    filter: blur(0);
+  }
+}
+
+/* Glowing border effect */
+.page::before {
+  content: '';
   position: absolute;
+  inset: -2px;
+  border-radius: 30px;
+  background: linear-gradient(135deg, 
+    rgba(255, 215, 0, 0.3), 
+    rgba(221, 160, 221, 0.3), 
+    rgba(255, 140, 0, 0.3));
+  background-size: 200% 200%;
+  animation: borderGlow 4s ease infinite;
+  opacity: 0;
+  transition: opacity 0.5s;
+  z-index: -1;
+  filter: blur(10px);
 }
 
-.page.flip {
-  transform: rotateY(-180deg);
+.page:hover::before {
+  opacity: 1;
 }
 
+@keyframes borderGlow {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+/* Poem Text */
 .poem {
-  font-size: 1.35rem;
-  line-height: 1.9;
-  letter-spacing: .03em;
-  background: linear-gradient(90deg,#b5a48b,#f1e8d5,#b5a48b);
-  background-size: 300%;
+  font-family: 'Crimson Pro', serif;
+  font-size: clamp(1.3rem, 2.5vw, 1.6rem);
+  line-height: 2.2;
+  letter-spacing: 0.03em;
+  white-space: pre-wrap;
+  background: linear-gradient(135deg, 
+    #ffd700 0%, 
+    #f5deb3 20%, 
+    #dda0dd 40%, 
+    #f0e68c 60%, 
+    #ffb347 80%, 
+    #ffd700 100%);
+  background-size: 400% 400%;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  animation: shimmer 8s infinite;
-  white-space: pre-wrap;
+  background-clip: text;
+  animation: poemFlow 15s ease-in-out infinite;
+  filter: drop-shadow(0 0 30px rgba(255, 215, 0, 0.2));
+  text-align: left;
 }
 
-@keyframes shimmer {
-  0%{background-position:0%}
-  50%{background-position:100%}
-  100%{background-position:0%}
+@keyframes poemFlow {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+/* Navigation */
+.navigation {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+  margin-top: 50px;
+  flex-wrap: wrap;
 }
 
 .nav-btn {
-  font-size: 1.8rem;
-  padding: 6px 14px;
-  border-radius: 999px;
-  border: 1px solid rgba(220,200,160,.4);
-  transition:.3s;
+  background: linear-gradient(135deg, rgba(30, 25, 45, 0.7), rgba(45, 35, 60, 0.7));
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 215, 180, 0.2);
+  color: #f5f1e8;
+  font-size: 1.5rem;
+  padding: 12px 20px;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.nav-btn::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(255, 215, 0, 0.15), rgba(221, 160, 221, 0.15));
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.nav-btn:hover::before {
+  opacity: 1;
 }
 
 .nav-btn:hover {
-  background:#e6dccb;
-  color:#000;
+  transform: translateY(-3px) scale(1.05);
+  box-shadow: 0 10px 30px rgba(255, 215, 0, 0.3);
+  border-color: rgba(255, 215, 0, 0.5);
+}
+
+.nav-btn:active {
+  transform: translateY(-1px) scale(1.02);
+}
+
+.page-indicators {
+  display: flex;
+  gap: 10px;
 }
 
 .page-num {
-  border:1px solid rgba(200,180,140,.4);
-  padding:6px 12px;
-  border-radius:999px;
+  background: rgba(30, 25, 45, 0.6);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 215, 180, 0.2);
+  color: #c4b5a0;
+  font-size: 1rem;
+  padding: 10px 16px;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  font-weight: 400;
+}
+
+.page-num:hover {
+  background: rgba(50, 45, 65, 0.8);
+  transform: translateY(-2px);
+  border-color: rgba(255, 215, 180, 0.4);
+  color: #f5f1e8;
 }
 
 .page-num.active {
-  background:#e6dccb;
-  color:#000;
+  background: linear-gradient(135deg, #ffd700, #dda0dd);
+  color: #0a0a0f;
+  font-weight: 600;
+  border-color: transparent;
+  box-shadow: 0 5px 25px rgba(255, 215, 0, 0.4);
+  transform: translateY(-2px);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .page {
+    padding: 40px 30px;
+  }
+  
+  .navigation {
+    gap: 10px;
+  }
+  
+  .page-num {
+    padding: 8px 12px;
+    font-size: 0.9rem;
+  }
+}
+
+/* Loading animation */
+@keyframes pageLoad {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.page.active {
+  animation: pageLoad 0.6s ease-out;
 }
 </style>
 </head>
 
 <body>
 
-<main class="min-h-screen flex items-center justify-center px-6 py-20">
+<div class="bg-canvas"></div>
 
-<div class="book max-w-4xl w-full text-center relative">
+<main>
+  <div class="container">
+    
+    <div class="title-section">
+      <h1>The Dead Beat Poets</h1>
+      <div class="subtitle">A Collection of Souls</div>
+    </div>
 
-<h1 class="title-font text-4xl md:text-5xl mb-6">
-The Dead Beat Poets
-</h1>
-
-<!-- PAGE 1 -->
-<div class="page" id="p1">
-<p class="poem">
-Sab be-asar ho gaya hai aaj kal,
+    <div class="book-wrapper">
+      <div class="page-container">
+        
+        <!-- Page 1 -->
+        <div class="page active" data-page="1">
+          <p class="poem">Sab be-asar ho gaya hai aaj kal,
 na dawa ka asar bacha, na dua ka,
 jo dard tere khayalon se uthta hai,
 woh na likhne se rukta hai,
@@ -136,7 +431,7 @@ na kehne se thakta hai.
 Sab be-asar…
 teri khamoshi bhi shor macha jaati hai,
 aur meri har baat
-tere ek “theek hoon” ke aage
+tere ek "theek hoon" ke aage
 be-jaan si lagti hai.
 
 Maine har tareeqa aazma liya,
@@ -147,54 +442,204 @@ par tera ek ehsaas
 sab kuchh be-asar kar deta hai.
 
 Kuchh zakhm
-theek hone ke liye bane hi nahi hote.
-</p>
-</div>
+theek hone ke liye bane hi nahi hote.</p>
+        </div>
 
-<!-- PAGE 2–5 -->
-<div class="page hidden" id="p2"><p class="poem">Page 2 — add your poem</p></div>
-<div class="page hidden" id="p3"><p class="poem">Page 3 — add your poem</p></div>
-<div class="page hidden" id="p4"><p class="poem">Page 4 — add your poem</p></div>
-<div class="page hidden" id="p5"><p class="poem">Page 5 — add your poem</p></div>
+        <!-- Page 2 -->
+        <div class="page" data-page="2">
+          <p class="poem">Your poem here...
 
-<!-- NAVIGATION -->
-<div class="flex justify-center items-center gap-4 mt-8">
-<button class="nav-btn" onclick="prev()">⟵</button>
+Add your beautiful words
+on this page.</p>
+        </div>
 
-<button class="page-num active" onclick="go(1)">1</button>
-<button class="page-num" onclick="go(2)">2</button>
-<button class="page-num" onclick="go(3)">3</button>
-<button class="page-num" onclick="go(4)">4</button>
-<button class="page-num" onclick="go(5)">5</button>
+        <!-- Page 3 -->
+        <div class="page" data-page="3">
+          <p class="poem">Your poem here...
 
-<button class="nav-btn" onclick="next()">⟶</button>
-</div>
+Add your beautiful words
+on this page.</p>
+        </div>
 
-</div>
+        <!-- Page 4 -->
+        <div class="page" data-page="4">
+          <p class="poem">Your poem here...
+
+Add your beautiful words
+on this page.</p>
+        </div>
+
+        <!-- Page 5 -->
+        <div class="page" data-page="5">
+          <p class="poem">Your poem here...
+
+Add your beautiful words
+on this page.</p>
+        </div>
+
+        <!-- Page 6 -->
+        <div class="page" data-page="6">
+          <p class="poem">Your poem here...
+
+Add your beautiful words
+on this page.</p>
+        </div>
+
+        <!-- Page 7 -->
+        <div class="page" data-page="7">
+          <p class="poem">Your poem here...
+
+Add your beautiful words
+on this page.</p>
+        </div>
+
+        <!-- Page 8 -->
+        <div class="page" data-page="8">
+          <p class="poem">Your poem here...
+
+Add your beautiful words
+on this page.</p>
+        </div>
+
+        <!-- Page 9 -->
+        <div class="page" data-page="9">
+          <p class="poem">Your poem here...
+
+Add your beautiful words
+on this page.</p>
+        </div>
+
+        <!-- Page 10 -->
+        <div class="page" data-page="10">
+          <p class="poem">Your poem here...
+
+Add your beautiful words
+on this page.</p>
+        </div>
+
+      </div>
+
+      <!-- Navigation -->
+      <div class="navigation">
+        <button class="nav-btn" onclick="prevPage()" aria-label="Previous page">⟵</button>
+        
+        <div class="page-indicators">
+          <button class="page-num active" onclick="goToPage(1)">1</button>
+          <button class="page-num" onclick="goToPage(2)">2</button>
+          <button class="page-num" onclick="goToPage(3)">3</button>
+          <button class="page-num" onclick="goToPage(4)">4</button>
+          <button class="page-num" onclick="goToPage(5)">5</button>
+          <button class="page-num" onclick="goToPage(6)">6</button>
+          <button class="page-num" onclick="goToPage(7)">7</button>
+          <button class="page-num" onclick="goToPage(8)">8</button>
+          <button class="page-num" onclick="goToPage(9)">9</button>
+          <button class="page-num" onclick="goToPage(10)">10</button>
+        </div>
+        
+        <button class="nav-btn" onclick="nextPage()" aria-label="Next page">⟶</button>
+      </div>
+
+    </div>
+  </div>
 </main>
 
 <script>
-let current = 1;
-const total = 5;
-
-function go(n) {
-  if(n === current) return;
-
-  document.getElementById("p"+current).classList.add("flip");
-  setTimeout(()=>{
-    document.getElementById("p"+current).classList.add("hidden");
-    document.getElementById("p"+current).classList.remove("flip");
-
-    current = n;
-    document.getElementById("p"+current).classList.remove("hidden");
-
-    document.querySelectorAll(".page-num").forEach(b=>b.classList.remove("active"));
-    document.querySelectorAll(".page-num")[current-1].classList.add("active");
-  },400);
+// Create floating particles
+function createParticles() {
+  const particleCount = 30;
+  for (let i = 0; i < particleCount; i++) {
+    const particle = document.createElement('div');
+    particle.className = 'particle';
+    particle.style.left = Math.random() * 100 + '%';
+    particle.style.animationDuration = (Math.random() * 15 + 10) + 's';
+    particle.style.animationDelay = Math.random() * 5 + 's';
+    document.body.appendChild(particle);
+  }
 }
 
-function next() { if(current < total) go(current+1); }
-function prev() { if(current > 1) go(current-1); }
+createParticles();
+
+// Page Navigation
+let currentPage = 1;
+const totalPages = 10;
+let isAnimating = false;
+
+function goToPage(pageNum) {
+  if (pageNum === currentPage || isAnimating || pageNum < 1 || pageNum > totalPages) return;
+  
+  isAnimating = true;
+  
+  const direction = pageNum > currentPage ? 'right' : 'left';
+  const currentPageEl = document.querySelector(`.page[data-page="${currentPage}"]`);
+  const newPageEl = document.querySelector(`.page[data-page="${pageNum}"]`);
+  
+  // Animate out current page
+  currentPageEl.classList.remove('active');
+  currentPageEl.classList.add(direction === 'right' ? 'slide-out-left' : 'slide-out-right');
+  
+  setTimeout(() => {
+    currentPageEl.classList.remove('slide-out-left', 'slide-out-right');
+    
+    // Animate in new page
+    newPageEl.classList.add(direction === 'right' ? 'slide-in-right' : 'slide-in-left');
+    newPageEl.classList.add('active');
+    
+    setTimeout(() => {
+      newPageEl.classList.remove('slide-in-left', 'slide-in-right');
+      isAnimating = false;
+    }, 700);
+    
+    currentPage = pageNum;
+    updatePageIndicators();
+  }, 700);
+}
+
+function nextPage() {
+  if (currentPage < totalPages) {
+    goToPage(currentPage + 1);
+  }
+}
+
+function prevPage() {
+  if (currentPage > 1) {
+    goToPage(currentPage - 1);
+  }
+}
+
+function updatePageIndicators() {
+  document.querySelectorAll('.page-num').forEach((btn, index) => {
+    btn.classList.toggle('active', index + 1 === currentPage);
+  });
+}
+
+// Keyboard navigation
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'ArrowRight') nextPage();
+  if (e.key === 'ArrowLeft') prevPage();
+});
+
+// Touch/Swipe support
+let touchStartX = 0;
+let touchEndX = 0;
+
+document.querySelector('.page-container').addEventListener('touchstart', (e) => {
+  touchStartX = e.changedTouches[0].screenX;
+});
+
+document.querySelector('.page-container').addEventListener('touchend', (e) => {
+  touchEndX = e.changedTouches[0].screenX;
+  handleSwipe();
+});
+
+function handleSwipe() {
+  const swipeThreshold = 50;
+  if (touchEndX < touchStartX - swipeThreshold) {
+    nextPage();
+  }
+  if (touchEndX > touchStartX + swipeThreshold) {
+    prevPage();
+  }
+}
 </script>
 
 </body>
