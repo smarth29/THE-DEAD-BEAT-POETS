@@ -4,7 +4,6 @@
 <meta charset="UTF-8">
 <title>The Dead Beat Poets</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@300;400;600&family=Cormorant+Garamond:wght@300;400;600&display=swap" rel="stylesheet">
 
 <style>
@@ -19,16 +18,28 @@ body {
   color: #f5f1e8;
   min-height: 100vh;
   overflow-x: hidden;
-  position: relative;
   background: #0a0a0f;
 }
 
-/* Simplified Background */
+/* Enhanced Background with Subtle Animation */
 .bg-canvas {
   position: fixed;
   inset: 0;
   z-index: 0;
-  background: linear-gradient(180deg, #0a0a0f 0%, #1a1a2e 100%);
+  background: linear-gradient(180deg, #0a0a0f 0%, #1a1a2e 50%, #0f0f1a 100%);
+}
+
+.bg-canvas::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 50% 50%, rgba(138, 43, 226, 0.1) 0%, transparent 50%);
+  animation: pulseGlow 8s ease-in-out infinite;
+}
+
+@keyframes pulseGlow {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 0.6; }
 }
 
 main {
@@ -46,69 +57,88 @@ main {
   width: 100%;
 }
 
-/* Title */
+/* Enhanced Title Section */
 .title-section {
   text-align: center;
-  margin-bottom: 60px;
-  animation: fadeIn 1s ease-out;
+  margin-bottom: 70px;
+  animation: fadeInDown 1.2s ease-out;
 }
 
-@keyframes fadeIn {
+@keyframes fadeInDown {
   from {
     opacity: 0;
+    transform: translateY(-30px);
   }
   to {
     opacity: 1;
+    transform: translateY(0);
   }
 }
 
 h1 {
   font-family: 'Cormorant Garamond', serif;
-  font-size: clamp(2.5rem, 6vw, 4.5rem);
+  font-size: clamp(2.8rem, 6vw, 5rem);
   font-weight: 300;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.08em;
   background: linear-gradient(135deg, #ffd700 0%, #ffb347 25%, #dda0dd 50%, #ffb347 75%, #ffd700 100%);
+  background-size: 200% auto;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  text-shadow: 0 0 80px rgba(255, 215, 0, 0.3);
-  margin-bottom: 15px;
+  animation: shimmer 6s linear infinite;
+  margin-bottom: 20px;
+  text-shadow: 0 0 100px rgba(255, 215, 0, 0.4);
+}
+
+@keyframes shimmer {
+  to { background-position: 200% center; }
 }
 
 .subtitle {
-  font-size: 1.1rem;
-  color: #c4b5a0;
-  letter-spacing: 0.2em;
+  font-size: 1.15rem;
+  color: #d4c5b0;
+  letter-spacing: 0.25em;
   text-transform: uppercase;
-  opacity: 0.8;
+  opacity: 0.85;
+  font-weight: 300;
 }
 
-/* Book Container */
+/* Enhanced Book Container */
 .book-wrapper {
-  perspective: 1500px;
+  perspective: 2000px;
   position: relative;
 }
 
 .page-container {
   position: relative;
-  min-height: 500px;
+  min-height: 550px;
 }
 
 .page {
   position: absolute;
   width: 100%;
-  background: linear-gradient(135deg, rgba(20, 18, 30, 0.85) 0%, rgba(35, 30, 45, 0.75) 100%);
-  backdrop-filter: blur(20px) saturate(180%);
-  border: 1px solid rgba(255, 215, 180, 0.15);
-  border-radius: 30px;
-  padding: 60px 50px;
+  background: linear-gradient(135deg, rgba(25, 22, 35, 0.92) 0%, rgba(40, 35, 50, 0.88) 100%);
+  backdrop-filter: blur(25px) saturate(180%);
+  border: 1.5px solid rgba(255, 215, 180, 0.18);
+  border-radius: 35px;
+  padding: 70px 60px 50px;
   box-shadow: 
-    0 40px 100px rgba(0, 0, 0, 0.8),
-    inset 0 1px 0 rgba(255, 255, 255, 0.03),
-    0 0 60px rgba(138, 43, 226, 0.15);
-  transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    0 50px 120px rgba(0, 0, 0, 0.9),
+    inset 0 2px 0 rgba(255, 255, 255, 0.05),
+    0 0 80px rgba(138, 43, 226, 0.2);
+  transition: all 0.7s cubic-bezier(0.4, 0, 0.2, 1);
   opacity: 0;
   pointer-events: none;
+}
+
+.page::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255, 215, 180, 0.3), transparent);
 }
 
 .page.active {
@@ -117,132 +147,159 @@ h1 {
   z-index: 2;
 }
 
-/* Simplified Page Transitions */
+/* Smooth Page Transitions */
 .page.slide-out-left {
-  animation: slideOutLeft 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  animation: slideOutLeft 0.7s cubic-bezier(0.4, 0, 0.2, 1) forwards;
 }
 
 .page.slide-out-right {
-  animation: slideOutRight 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  animation: slideOutRight 0.7s cubic-bezier(0.4, 0, 0.2, 1) forwards;
 }
 
 .page.slide-in-left {
-  animation: slideInLeft 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  animation: slideInLeft 0.7s cubic-bezier(0.4, 0, 0.2, 1) forwards;
 }
 
 .page.slide-in-right {
-  animation: slideInRight 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  animation: slideInRight 0.7s cubic-bezier(0.4, 0, 0.2, 1) forwards;
 }
 
 @keyframes slideOutLeft {
   0% { 
-    transform: translateX(0) rotateY(0deg);
+    transform: translateX(0) rotateY(0deg) scale(1);
     opacity: 1;
   }
   100% { 
-    transform: translateX(-100%) rotateY(-10deg);
+    transform: translateX(-120%) rotateY(-12deg) scale(0.9);
     opacity: 0;
   }
 }
 
 @keyframes slideOutRight {
   0% { 
-    transform: translateX(0) rotateY(0deg);
+    transform: translateX(0) rotateY(0deg) scale(1);
     opacity: 1;
   }
   100% { 
-    transform: translateX(100%) rotateY(10deg);
+    transform: translateX(120%) rotateY(12deg) scale(0.9);
     opacity: 0;
   }
 }
 
 @keyframes slideInLeft {
   0% { 
-    transform: translateX(-100%) rotateY(-10deg);
+    transform: translateX(-120%) rotateY(-12deg) scale(0.9);
     opacity: 0;
   }
   100% { 
-    transform: translateX(0) rotateY(0deg);
+    transform: translateX(0) rotateY(0deg) scale(1);
     opacity: 1;
   }
 }
 
 @keyframes slideInRight {
   0% { 
-    transform: translateX(100%) rotateY(10deg);
+    transform: translateX(120%) rotateY(12deg) scale(0.9);
     opacity: 0;
   }
   100% { 
-    transform: translateX(0) rotateY(0deg);
+    transform: translateX(0) rotateY(0deg) scale(1);
     opacity: 1;
   }
 }
 
-/* Poem Text */
+/* Enhanced Poem Styling */
 .poem {
   font-family: 'Crimson Pro', serif;
-  font-size: clamp(1.3rem, 2.5vw, 1.6rem);
-  line-height: 2.2;
-  letter-spacing: 0.03em;
+  font-size: clamp(1.35rem, 2.5vw, 1.7rem);
+  line-height: 2.3;
+  letter-spacing: 0.04em;
   white-space: pre-wrap;
   color: #f5deb3;
   text-align: left;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
-/* Navigation */
+/* Page Number Display */
+.page-number-display {
+  text-align: center;
+  margin-top: 50px;
+  padding-top: 30px;
+  border-top: 1px solid rgba(255, 215, 180, 0.1);
+  color: #c4b5a0;
+  font-size: 1.05rem;
+  letter-spacing: 0.1em;
+  opacity: 0.75;
+  font-weight: 300;
+}
+
+/* Enhanced Navigation */
 .navigation {
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 15px;
-  margin-top: 50px;
+  gap: 20px;
+  margin-top: 60px;
   flex-wrap: wrap;
 }
 
 .nav-btn {
-  background: linear-gradient(135deg, rgba(30, 25, 45, 0.7), rgba(45, 35, 60, 0.7));
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 215, 180, 0.2);
+  background: linear-gradient(135deg, rgba(35, 30, 48, 0.8), rgba(50, 40, 65, 0.8));
+  backdrop-filter: blur(12px);
+  border: 1.5px solid rgba(255, 215, 180, 0.25);
   color: #f5f1e8;
-  font-size: 1.5rem;
-  padding: 12px 20px;
+  font-size: 1.6rem;
+  padding: 14px 24px;
   border-radius: 50px;
   cursor: pointer;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
 }
 
-.nav-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 5px 15px rgba(255, 215, 0, 0.2);
-  border-color: rgba(255, 215, 0, 0.4);
+.nav-btn:hover:not(:disabled) {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(255, 215, 0, 0.25);
+  border-color: rgba(255, 215, 0, 0.5);
+  background: linear-gradient(135deg, rgba(45, 35, 58, 0.9), rgba(60, 45, 75, 0.9));
 }
 
-.nav-btn:active {
-  transform: translateY(0);
+.nav-btn:active:not(:disabled) {
+  transform: translateY(-1px);
+}
+
+.nav-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
 }
 
 .page-indicators {
   display: flex;
-  gap: 10px;
+  gap: 12px;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 
 .page-num {
-  background: rgba(30, 25, 45, 0.6);
-  backdrop-filter: blur(8px);
-  border: 1px solid rgba(255, 215, 180, 0.2);
+  background: rgba(35, 30, 48, 0.7);
+  backdrop-filter: blur(10px);
+  border: 1.5px solid rgba(255, 215, 180, 0.25);
   color: #c4b5a0;
-  font-size: 1rem;
-  padding: 10px 16px;
+  font-size: 1.05rem;
+  padding: 12px 18px;
   border-radius: 50px;
   cursor: pointer;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
   font-weight: 400;
+  min-width: 48px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
 }
 
 .page-num:hover {
-  background: rgba(50, 45, 65, 0.8);
-  border-color: rgba(255, 215, 180, 0.4);
+  background: rgba(55, 50, 70, 0.9);
+  border-color: rgba(255, 215, 180, 0.45);
   color: #f5f1e8;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(255, 215, 0, 0.15);
 }
 
 .page-num.active {
@@ -250,22 +307,68 @@ h1 {
   color: #0a0a0f;
   font-weight: 600;
   border-color: transparent;
-  box-shadow: 0 2px 10px rgba(255, 215, 0, 0.3);
+  box-shadow: 0 4px 15px rgba(255, 215, 0, 0.4);
+  transform: scale(1.05);
 }
 
-/* Responsive */
+.page-num.active:hover {
+  transform: scale(1.05) translateY(-2px);
+}
+
+/* Responsive Design */
 @media (max-width: 768px) {
   .page {
-    padding: 40px 30px;
+    padding: 50px 35px 40px;
+    min-height: 500px;
+  }
+  
+  .poem {
+    font-size: 1.25rem;
+    line-height: 2.1;
   }
   
   .navigation {
-    gap: 10px;
+    gap: 12px;
+    margin-top: 50px;
+  }
+  
+  .nav-btn {
+    padding: 12px 20px;
+    font-size: 1.4rem;
   }
   
   .page-num {
-    padding: 8px 12px;
-    font-size: 0.9rem;
+    padding: 10px 14px;
+    font-size: 0.95rem;
+    min-width: 42px;
+  }
+  
+  .page-number-display {
+    font-size: 0.95rem;
+    margin-top: 40px;
+  }
+}
+
+@media (max-width: 480px) {
+  main {
+    padding: 40px 15px;
+  }
+  
+  .title-section {
+    margin-bottom: 50px;
+  }
+  
+  .page {
+    padding: 40px 25px 35px;
+    border-radius: 25px;
+  }
+  
+  .navigation {
+    gap: 8px;
+  }
+  
+  .page-indicators {
+    gap: 8px;
   }
 }
 </style>
@@ -288,27 +391,11 @@ h1 {
         
         <!-- Page 1 -->
         <div class="page active" data-page="1">
-          <p class="poem">Sab be-asar ho gaya hai aaj kal,
-na dawa ka asar bacha, na dua ka,
-jo dard tere khayalon se uthta hai,
-woh na likhne se rukta hai,
-na kehne se thakta hai.
+          <p class="poem">Your poem here...
 
-Sab be-asar…
-teri khamoshi bhi shor macha jaati hai,
-aur meri har baat
-tere ek "theek hoon" ke aage
-be-jaan si lagti hai.
-
-Maine har tareeqa aazma liya,
-khud ko samjhana, khud se ladna,
-raat ko hansna,
-aur din me chup-chup ke bikharna…
-par tera ek ehsaas
-sab kuchh be-asar kar deta hai.
-
-Kuchh zakhm
-theek hone ke liye bane hi nahi hote.</p>
+Add your beautiful words
+on this page.</p>
+          <div class="page-number-display">Page 1 of 5</div>
         </div>
 
         <!-- Page 2 -->
@@ -317,6 +404,7 @@ theek hone ke liye bane hi nahi hote.</p>
 
 Add your beautiful words
 on this page.</p>
+          <div class="page-number-display">Page 2 of 5</div>
         </div>
 
         <!-- Page 3 -->
@@ -325,6 +413,7 @@ on this page.</p>
 
 Add your beautiful words
 on this page.</p>
+          <div class="page-number-display">Page 3 of 5</div>
         </div>
 
         <!-- Page 4 -->
@@ -333,6 +422,7 @@ on this page.</p>
 
 Add your beautiful words
 on this page.</p>
+          <div class="page-number-display">Page 4 of 5</div>
         </div>
 
         <!-- Page 5 -->
@@ -341,68 +431,24 @@ on this page.</p>
 
 Add your beautiful words
 on this page.</p>
-        </div>
-
-        <!-- Page 6 -->
-        <div class="page" data-page="6">
-          <p class="poem">Your poem here...
-
-Add your beautiful words
-on this page.</p>
-        </div>
-
-        <!-- Page 7 -->
-        <div class="page" data-page="7">
-          <p class="poem">Your poem here...
-
-Add your beautiful words
-on this page.</p>
-        </div>
-
-        <!-- Page 8 -->
-        <div class="page" data-page="8">
-          <p class="poem">Your poem here...
-
-Add your beautiful words
-on this page.</p>
-        </div>
-
-        <!-- Page 9 -->
-        <div class="page" data-page="9">
-          <p class="poem">Your poem here...
-
-Add your beautiful words
-on this page.</p>
-        </div>
-
-        <!-- Page 10 -->
-        <div class="page" data-page="10">
-          <p class="poem">Your poem here...
-
-Add your beautiful words
-on this page.</p>
+          <div class="page-number-display">Page 5 of 5</div>
         </div>
 
       </div>
 
       <!-- Navigation -->
       <div class="navigation">
-        <button class="nav-btn" onclick="prevPage()" aria-label="Previous page">⟵</button>
+        <button class="nav-btn" id="prevBtn" onclick="prevPage()" aria-label="Previous page">⟵</button>
         
-        <div class="page-indicators">
+        <div class="page-indicators" id="pageIndicators">
           <button class="page-num active" onclick="goToPage(1)">1</button>
           <button class="page-num" onclick="goToPage(2)">2</button>
           <button class="page-num" onclick="goToPage(3)">3</button>
           <button class="page-num" onclick="goToPage(4)">4</button>
           <button class="page-num" onclick="goToPage(5)">5</button>
-          <button class="page-num" onclick="goToPage(6)">6</button>
-          <button class="page-num" onclick="goToPage(7)">7</button>
-          <button class="page-num" onclick="goToPage(8)">8</button>
-          <button class="page-num" onclick="goToPage(9)">9</button>
-          <button class="page-num" onclick="goToPage(10)">10</button>
         </div>
         
-        <button class="nav-btn" onclick="nextPage()" aria-label="Next page">⟶</button>
+        <button class="nav-btn" id="nextBtn" onclick="nextPage()" aria-label="Next page">⟶</button>
       </div>
 
     </div>
@@ -410,19 +456,31 @@ on this page.</p>
 </main>
 
 <script>
-// Page Navigation
+// Page Navigation System
 let currentPage = 1;
-const totalPages = 10;
+const totalPages = 5;
 let isAnimating = false;
 
+// Initialize
+document.addEventListener('DOMContentLoaded', () => {
+  updateNavigationState();
+});
+
 function goToPage(pageNum) {
-  if (pageNum === currentPage || isAnimating || pageNum < 1 || pageNum > totalPages) return;
+  if (pageNum === currentPage || isAnimating || pageNum < 1 || pageNum > totalPages) {
+    return;
+  }
   
   isAnimating = true;
   
   const direction = pageNum > currentPage ? 'right' : 'left';
   const currentPageEl = document.querySelector(`.page[data-page="${currentPage}"]`);
   const newPageEl = document.querySelector(`.page[data-page="${pageNum}"]`);
+  
+  if (!currentPageEl || !newPageEl) {
+    isAnimating = false;
+    return;
+  }
   
   // Animate out current page
   currentPageEl.classList.remove('active');
@@ -438,56 +496,77 @@ function goToPage(pageNum) {
     setTimeout(() => {
       newPageEl.classList.remove('slide-in-left', 'slide-in-right');
       isAnimating = false;
-    }, 600);
+    }, 700);
     
     currentPage = pageNum;
-    updatePageIndicators();
-  }, 600);
+    updateNavigationState();
+  }, 700);
 }
 
 function nextPage() {
-  if (currentPage < totalPages) {
+  if (currentPage < totalPages && !isAnimating) {
     goToPage(currentPage + 1);
   }
 }
 
 function prevPage() {
-  if (currentPage > 1) {
+  if (currentPage > 1 && !isAnimating) {
     goToPage(currentPage - 1);
   }
 }
 
-function updatePageIndicators() {
+function updateNavigationState() {
+  // Update page indicators
   document.querySelectorAll('.page-num').forEach((btn, index) => {
     btn.classList.toggle('active', index + 1 === currentPage);
   });
+  
+  // Update navigation buttons state
+  const prevBtn = document.getElementById('prevBtn');
+  const nextBtn = document.getElementById('nextBtn');
+  
+  if (prevBtn) {
+    prevBtn.disabled = currentPage === 1;
+  }
+  
+  if (nextBtn) {
+    nextBtn.disabled = currentPage === totalPages;
+  }
 }
 
 // Keyboard navigation
 document.addEventListener('keydown', (e) => {
-  if (e.key === 'ArrowRight') nextPage();
-  if (e.key === 'ArrowLeft') prevPage();
+  if (e.key === 'ArrowRight') {
+    nextPage();
+  } else if (e.key === 'ArrowLeft') {
+    prevPage();
+  }
 });
 
 // Touch/Swipe support
 let touchStartX = 0;
 let touchEndX = 0;
+const swipeThreshold = 75;
 
-document.querySelector('.page-container').addEventListener('touchstart', (e) => {
-  touchStartX = e.changedTouches[0].screenX;
-});
+const pageContainer = document.querySelector('.page-container');
 
-document.querySelector('.page-container').addEventListener('touchend', (e) => {
-  touchEndX = e.changedTouches[0].screenX;
-  handleSwipe();
-});
+if (pageContainer) {
+  pageContainer.addEventListener('touchstart', (e) => {
+    touchStartX = e.changedTouches[0].screenX;
+  }, { passive: true });
+
+  pageContainer.addEventListener('touchend', (e) => {
+    touchEndX = e.changedTouches[0].screenX;
+    handleSwipe();
+  }, { passive: true });
+}
 
 function handleSwipe() {
-  const swipeThreshold = 50;
-  if (touchEndX < touchStartX - swipeThreshold) {
+  const swipeDistance = touchEndX - touchStartX;
+  
+  if (swipeDistance < -swipeThreshold) {
     nextPage();
-  }
-  if (touchEndX > touchStartX + swipeThreshold) {
+  } else if (swipeDistance > swipeThreshold) {
     prevPage();
   }
 }
